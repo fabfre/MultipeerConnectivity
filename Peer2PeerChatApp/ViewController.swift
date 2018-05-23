@@ -25,9 +25,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         appDelegate.mpcManager.delegate = self
         
-        appDelegate.mpcManager.browser.startBrowsingForPeers()
-        
-        appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+        //@TODO start browsing for peers
+
+        //@TODO start advertising the service provided by a local peer (to be visible for other peers)
         
         isAdvertising = true
     }
@@ -45,13 +45,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let visibilityAction: UIAlertAction = UIAlertAction(title: actionTitle, style: UIAlertActionStyle.default) { (alertAction) -> Void in
             if self.isAdvertising == true {
-                self.appDelegate.mpcManager.advertiser.stopAdvertisingPeer()
+                // @TODO to be invisible for other peers
+
             }
-            else{
-                self.appDelegate.mpcManager.advertiser.startAdvertisingPeer()
+            else {
+                // @TODO to be visible for other peers
             }
             
-            self.isAdvertising = !self.isAdvertising
+            // change advertising property here
+            
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (alertAction) -> Void in
@@ -69,12 +71,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.mpcManager.foundPeers.count
+        // @TODO return here the right number (number of peers)
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "idCellPeer") as! UITableViewCell
-        cell.textLabel?.text = appDelegate.mpcManager.foundPeers[indexPath.row].displayName
+        //@TODO set text of the label to displayName of the right peer
+        
         return cell
     }
     
@@ -89,23 +93,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func foundPeer() {
-        tableView.reloadData()
+        //@TODO
     }
     
     
     func lostPeer() {
-        tableView.reloadData()
+        //@TODO
     }
     
     func invitationWasReceived(fromPeer: String) {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to chat with you.", preferredStyle: UIAlertControllerStyle.alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.default) { (alertAction) -> Void in
-            self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
+            // @TODO use the invitationHandler to accept the invitation
+            
         }
         
         let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (alertAction) -> Void in
-            self.appDelegate.mpcManager.invitationHandler(false, nil)
+            // @TODO decline the invitation
+
         }
         
         alert.addAction(acceptAction)

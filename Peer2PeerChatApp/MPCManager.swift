@@ -42,21 +42,20 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         
         peer = MCPeerID(displayName: UIDevice.current.name)
         
-        session = MCSession(peer: peer, securityIdentity: nil, encryptionPreference: .none)
-        session.delegate = self
+        // @TODO create MCSession (sercurityIdentity:nil, encryptionPreference:none)
         
-        browser = MCNearbyServiceBrowser(peer: peer, serviceType: "appcoda-mpc")
-        browser.delegate = self
+        // @TODO set session delegate
         
-        advertiser = MCNearbyServiceAdvertiser(peer: peer, discoveryInfo: nil, serviceType: "appcoda-mpc")
-        advertiser.delegate = self
+        // @TODO create MCNearbyBrowser and set delegate
+
+        // @TODO create advertiser and set delegate
     }
     
     
     // MARK: MCNearbyServiceBrowserDelegate method implementation
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         foundPeers.append(peerID)
-        delegate?.foundPeer()
+        // @TODO call delegate method to inform ViewController
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -66,7 +65,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
                 break
             }
         }
-        delegate?.lostPeer()
+        // @TODO call delegate method to inform ViewController
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers
@@ -79,7 +78,8 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping ((Bool, MCSession?) -> Void)) {
         self.invitationHandler = invitationHandler
         
-        delegate?.invitationWasReceived(fromPeer: peerID.displayName)
+        // @TODO call delegate method to inform ViewController
+        
     }
     
     
@@ -93,7 +93,7 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         switch state{
         case MCSessionState.connected:
             print("Connected to session: \(session)")
-            delegate?.connectedWithPeer(peerID: peerID)
+            // @TODO call delegate method to inform ViewController
             
         case MCSessionState.connecting:
             print("Connecting to session: \(session)")
@@ -107,7 +107,8 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         let dataDictionary = NSKeyedUnarchiver.unarchiveObject(with: data) as! Dictionary<String, String>
         
         if let message = dataDictionary["message"] {
-            model.addMessage(message: message, peerName: peerID)
+            // @TODO save message in model
+            
         }
     }
     
@@ -129,7 +130,8 @@ class MPCManager: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, M
         let dataToSend = NSKeyedArchiver.archivedData(withRootObject: dictionary)
         let peersArray = NSArray(object: targetPeer)
         do {
-            try session.send(dataToSend, toPeers: peersArray as! [MCPeerID], with: MCSessionSendDataMode.reliable)
+            // @TODO send session (tipp: send data with: MCSessionSendDataMode.reliable)
+            
         } catch {
             return false
         }

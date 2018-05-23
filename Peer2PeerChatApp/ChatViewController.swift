@@ -23,8 +23,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func sendMessage(_ sender: Any) {
         if let message = chatInput.text {
             let data = ["message": message]
-            self.appDelegate.mpcManager.sendData(dictionaryWithData: data, toPeer: appDelegate.mpcManager.foundPeers[0])
-            model.addMessage(message: message, peerName: appDelegate.mpcManager.peer)
+            //@TODO send data to other peer
+            
+            //@TODO save message to model
             tableView.reloadData()
             chatInput.text = ""
         }
@@ -44,7 +45,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(newMessage(notification:)), name: Notification.Name(rawValue: "newMessage"), object: nil)
+        
+        //@TODO use the notification center to observe the model
         
         tableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "ChatTableViewCell")
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -91,15 +93,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.chatMessages.count
+        // @TODO return the right number
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCell", for: indexPath) as! ChatTableViewCell
         
-        cell.userNameLabel.text = model.chatMessages[indexPath.row].peer.displayName
-        cell.userMessageLabel.text = model.chatMessages[indexPath.row].message
+        // @TODO set userNameLabel and userMessageLabel of the cell
         
         if model.chatMessages[indexPath.row].type == .own {
             cell.backgroundColorView.backgroundColor = UIColor.blue

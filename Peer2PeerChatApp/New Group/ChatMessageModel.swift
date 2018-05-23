@@ -40,7 +40,9 @@ class ChatMessageModel {
     //creating new chat message
     func addMessage(message: String, peerName: MCPeerID) {
         let newChatMessage = ChatMessage.init(message: message, peer: peerName)
-        chatMessages.append(newChatMessage)
-        NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "newMessage")))
+        // @TODO save new chat message
+        
+        //@TODO inform ChatViewController to update TableView
+
     }
 }
