@@ -37,6 +37,7 @@ class ChatMessageModel {
     
     var chatMessages: [ChatMessage] = []
     
+    //creating new chat message
     func addMessage(message: String, peerName: MCPeerID) {
         let newChatMessage = ChatMessage.init(message: message, peer: peerName)
         chatMessages.append(newChatMessage)
